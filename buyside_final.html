@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>BuySide Partners — Document Q&A</title>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<!-- MSAL — Microsoft Authentication Library -->
-<script src="https://alcdn.msauth.net/browser/2.38.3/js/msal-browser.min.js"></script>
 <style>
 :root{
   --navy:#0B1F3A;--navy-mid:#132C52;--navy-light:#1A3560;--navy-card:#0F2444;
@@ -18,33 +16,25 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;font-family:'Heebo',sans-serif;background:var(--navy);color:var(--white);overflow:hidden;}
 .shell{display:flex;flex-direction:column;height:100vh;max-width:860px;margin:0 auto;}
-
 header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:0.5px solid var(--border);flex-shrink:0;}
 .brand{display:flex;align-items:center;gap:12px;}
 .logo{width:38px;height:38px;border-radius:9px;flex-shrink:0;background:linear-gradient(135deg,var(--gold),var(--gold-light));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--navy);}
 .brand-text h1{font-size:14px;font-weight:600;}
 .brand-text p{font-size:10px;color:var(--muted);letter-spacing:0.5px;text-transform:uppercase;}
-.status-pill{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--gold);background:var(--gold-pale);border:0.5px solid rgba(201,168,76,0.25);border-radius:20px;padding:4px 12px;cursor:pointer;}
+.status-pill{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--gold);background:var(--gold-pale);border:0.5px solid rgba(201,168,76,0.25);border-radius:20px;padding:4px 12px;}
 .dot{width:6px;height:6px;border-radius:50%;background:#ef4444;}
 .dot.ok{background:#4ade80;}
 .dot.busy{background:var(--gold);animation:pulse 1s ease-in-out infinite;}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.2;}}
-
-/* Login screen */
 .login-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:40px;}
 .login-screen h2{font-size:20px;font-weight:500;text-align:center;}
 .login-screen h2 em{color:var(--gold);font-style:normal;}
 .login-screen p{font-size:13px;color:var(--muted);text-align:center;max-width:380px;line-height:1.65;}
-.ms-btn{display:flex;align-items:center;gap:10px;background:var(--white);color:#1a1a1a;border:none;border-radius:var(--radius-sm);padding:12px 24px;font-family:'Heebo',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity 0.15s;}
-.ms-btn:hover{opacity:0.9;}
-.ms-btn svg{flex-shrink:0;}
-
-/* Chat */
+.ms-btn{display:flex;align-items:center;gap:10px;background:var(--white);color:#1a1a1a;border:none;border-radius:var(--radius-sm);padding:12px 24px;font-family:'Heebo',sans-serif;font-size:14px;font-weight:600;cursor:pointer;}
 .chat-screen{flex:1;display:none;flex-direction:column;overflow:hidden;}
 .chat{flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:16px;}
 .chat::-webkit-scrollbar{width:3px;}
 .chat::-webkit-scrollbar-thumb{background:var(--navy-light);border-radius:4px;}
-
 .msg{display:flex;gap:10px;animation:fadeUp 0.22s ease;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
 .msg.user{flex-direction:row-reverse;}
@@ -52,23 +42,21 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .avatar.ai{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);}
 .avatar.user{background:var(--navy-light);color:var(--gold);border:0.5px solid var(--border);}
 .bubble{max-width:82%;padding:12px 16px;border-radius:var(--radius);font-size:14px;line-height:1.75;}
-.msg.ai   .bubble{background:var(--navy-card);border:0.5px solid var(--border-dim);color:rgba(255,255,255,0.9);border-radius:4px var(--radius) var(--radius) var(--radius);}
+.msg.ai .bubble{background:var(--navy-card);border:0.5px solid var(--border-dim);color:rgba(255,255,255,0.9);border-radius:4px var(--radius) var(--radius) var(--radius);}
 .msg.user .bubble{background:var(--navy-light);border:0.5px solid var(--border);color:var(--white);border-radius:var(--radius) 4px var(--radius) var(--radius);}
 .bubble strong{color:var(--gold-light);font-weight:600;}
 .bubble p{margin-bottom:6px;}
 .bubble p:last-child{margin-bottom:0;}
 .bubble ul{padding-right:18px;margin:6px 0;}
 .bubble li{margin-bottom:4px;}
-
 .typing{display:flex;gap:4px;padding:4px 0;}
 .typing span{width:6px;height:6px;border-radius:50%;background:var(--gold);opacity:0.35;animation:bounce 1.2s ease-in-out infinite;}
 .typing span:nth-child(2){animation-delay:0.15s;}
 .typing span:nth-child(3){animation-delay:0.3s;}
 @keyframes bounce{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-7px);opacity:1;}}
-
 .sources-block{margin-top:12px;padding-top:10px;border-top:0.5px solid var(--border-dim);}
 .sources-label{font-size:10px;color:var(--muted);letter-spacing:0.4px;text-transform:uppercase;margin-bottom:7px;}
-.source-link{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.03);border:0.5px solid var(--border-dim);border-radius:var(--radius-sm);padding:8px 11px;font-size:12px;text-decoration:none;color:inherit;margin-bottom:5px;transition:border-color 0.15s,background 0.15s;}
+.source-link{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.03);border:0.5px solid var(--border-dim);border-radius:var(--radius-sm);padding:8px 11px;font-size:12px;text-decoration:none;color:inherit;margin-bottom:5px;transition:border-color 0.15s;}
 .source-link:hover{border-color:var(--border);background:rgba(201,168,76,0.06);}
 .sl-icon{width:24px;height:24px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;}
 .sl-icon.pdf{background:rgba(220,53,53,0.15);color:#f07070;}
@@ -79,15 +67,13 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .sl-name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:rgba(255,255,255,0.8);}
 .sl-meta{font-size:10px;color:var(--muted);white-space:nowrap;margin-left:8px;}
 .sl-open{font-size:10px;color:var(--gold);white-space:nowrap;flex-shrink:0;}
-
 .welcome{padding:20px 0 4px;}
 .welcome h2{font-size:20px;font-weight:500;margin-bottom:8px;}
 .welcome h2 em{color:var(--gold);font-style:normal;}
 .welcome p{font-size:13px;color:var(--muted);line-height:1.65;max-width:520px;}
 .quick-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px;}
 .qchip{font-size:12px;padding:6px 13px;border-radius:20px;background:var(--gold-pale);border:0.5px solid var(--border);color:rgba(255,255,255,0.7);cursor:pointer;font-family:inherit;transition:all 0.15s;}
-.qchip:hover{background:rgba(201,168,76,0.14);border-color:rgba(201,168,76,0.4);color:var(--white);}
-
+.qchip:hover{background:rgba(201,168,76,0.14);color:var(--white);}
 .input-area{padding:12px 24px 16px;border-top:0.5px solid var(--border-dim);flex-shrink:0;}
 .input-row{display:flex;gap:8px;align-items:flex-end;background:var(--navy-mid);border:0.5px solid var(--border);border-radius:var(--radius);padding:10px 14px;transition:border-color 0.2s;}
 .input-row:focus-within{border-color:rgba(201,168,76,0.45);}
@@ -102,7 +88,6 @@ textarea::placeholder{color:var(--muted);}
 </head>
 <body>
 <div class="shell">
-
 <header>
   <div class="brand">
     <div class="logo">BP</div>
@@ -111,19 +96,18 @@ textarea::placeholder{color:var(--muted);}
       <p>Document Intelligence Agent</p>
     </div>
   </div>
-  <div class="status-pill" onclick="toggleLogin()">
+  <div class="status-pill">
     <div class="dot" id="sdot"></div>
     <span id="stxt">לא מחובר</span>
   </div>
 </header>
 
-<!-- Login Screen -->
 <div class="login-screen" id="loginScreen">
   <div class="logo" style="width:56px;height:56px;font-size:20px;border-radius:14px;">BP</div>
   <h2>ברוך הבא ל<em>BuySide Agent</em></h2>
-  <p>התחבר עם חשבון Microsoft שלך כדי לגשת למסמכי BuySide Partners ב-SharePoint</p>
-  <button class="ms-btn" onclick="login()">
-    <svg width="20" height="20" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <p>התחבר עם חשבון Microsoft שלך כדי לגשת למסמכי BuySide Partners</p>
+  <button class="ms-btn" id="loginBtn">
+    <svg width="20" height="20" viewBox="0 0 21 21" fill="none">
       <rect x="1" y="1" width="9" height="9" fill="#F25022"/>
       <rect x="11" y="1" width="9" height="9" fill="#7FBA00"/>
       <rect x="1" y="11" width="9" height="9" fill="#00A4EF"/>
@@ -133,17 +117,16 @@ textarea::placeholder{color:var(--muted);}
   </button>
 </div>
 
-<!-- Chat Screen -->
 <div class="chat-screen" id="chatScreen">
   <div class="chat" id="chat">
     <div class="welcome">
       <h2>שלום, <em>מה תרצה לדעת?</em></h2>
-      <p>שאל שאלה על כל קרן, Factsheet, דוח כספי או מסמך — אמשוך את המידע ישירות מהשרת.</p>
+      <p>שאל שאלה על כל קרן, Factsheet, דוח כספי או מסמך.</p>
       <div class="quick-row">
         <button class="qchip" onclick="ask('מה שיעור המינוף ב-BCRED?')">מינוף BCRED</button>
         <button class="qchip" onclick="ask('מה עושה קרן אריון?')">קרן אריון</button>
         <button class="qchip" onclick="ask('מה תשואת OCIC ל-2025?')">תשואת OCIC</button>
-        <button class="qchip" onclick="ask('מה משך חיי הקרן של מרתון?')">מרתון — משך חיים</button>
+        <button class="qchip" onclick="ask('מה משך חיי הקרן של מרתון?')">מרתון</button>
         <button class="qchip" onclick="ask('סכם את הFactsheet האחרון של Sphera Value')">Sphera Factsheet</button>
         <button class="qchip" onclick="ask('אילו קרנות יש בתיקיית Advisory?')">קרנות Advisory</button>
       </div>
@@ -161,276 +144,214 @@ textarea::placeholder{color:var(--muted);}
     <div class="hint">Enter לשליחה · Shift+Enter לשורה חדשה</div>
   </div>
 </div>
-
 </div>
 
 <script>
-const CLIENT_ID  = "36a760d3-2ff8-482a-a450-27115cdf2d69";
-const TENANT_ID  = "7251c64e-e64e-48b7-92df-c9719e4f8e28";
-const GEMINI_KEY = "";
-const GEMINI_MODEL = "gemini-2.0-flash";
+var CLIENT_ID   = "36a760d3-2ff8-482a-a450-27115cdf2d69";
+var TENANT_ID   = "7251c64e-e64e-48b7-92df-c9719e4f8e28";
+var REDIRECT    = "https://liranw.github.io/buyside-agent/buyside_final.html";
+var SCOPES      = "https://graph.microsoft.com/Sites.Read.All https://graph.microsoft.com/Files.Read.All openid profile";
+var msToken     = null;
+var busy        = false;
+var chatEl      = document.getElementById("chat");
+var inp         = document.getElementById("inp");
 
-/* ── Ask AI — uses Gemini if key present, else returns raw doc content ── */
-async function askGemini(question, docsContext){
-  // אם אין Gemini key — החזר את תוכן המסמכים ישירות עם עיצוב
-  if(!GEMINI_KEY){
-    return `מצאתי את המסמכים הרלוונטיים. להלן המידע שנמצא:\n\n${docsContext.slice(0,2000)}`;
-  }
-  const prompt=`אתה סוכן מסמכים של BuySide Partners — חברת ייעוץ השקעות ופרייבט אקוויטי.
-ענה אך ורק לפי המסמכים שסופקו. אל תשתמש בידע כללי.
-אם המידע לא נמצא — כתוב: "לא מצאתי מסמך רלוונטי בשרת."
-ענה בעברית, ישירות ומקצועית. השתמש ב-**הדגשה** לנקודות מפתח.
+inp.addEventListener("input", function() {
+  inp.style.height = "auto";
+  inp.style.height = Math.min(inp.scrollHeight, 130) + "px";
+});
+inp.addEventListener("keydown", function(e) {
+  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMsg(); }
+});
 
-שאלה: ${question}
-
-מסמכים:
-${docsContext}`;
-
-  const res=await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`,
-    {method:'POST',headers:{'Content-Type':'application/json'},
-     body:JSON.stringify({contents:[{parts:[{text:prompt}]}]})}
-  );
-  const data=await res.json();
-  if(data.error) throw new Error(data.error.message);
-  return data?.candidates?.[0]?.content?.parts?.[0]?.text||'לא התקבלה תשובה.';
+function setStatus(label, state) {
+  document.getElementById("stxt").textContent = label;
+  var dot = document.getElementById("sdot");
+  dot.className = "dot" + (state ? " " + state : "");
 }
 
-// MSAL config
-const msalConfig = {
-  auth: {
-    clientId: CLIENT_ID,
-    authority: `https://login.microsoftonline.com/${TENANT_ID}`,
-    redirectUri: "https://liranw.github.io/buyside-agent/",
-  },
-  cache: { cacheLocation: "sessionStorage" }
-};
-const msalInstance = new msal.PublicClientApplication(msalConfig);
-const graphScopes  = ["Sites.Read.All","Files.Read.All","User.Read"];
-
-let busy = false;
-const chatEl = document.getElementById('chat');
-const inp    = document.getElementById('inp');
-
-inp.addEventListener('input', () => { inp.style.height='auto'; inp.style.height=Math.min(inp.scrollHeight,130)+'px'; });
-inp.addEventListener('keydown', e => { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();} });
-
-function setStatus(label, state){
-  document.getElementById('stxt').textContent = label;
-  document.getElementById('sdot').className = 'dot'+(state?' '+state:'');
+function esc(s) {
+  return String(s || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 }
 
-function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+/* ── Microsoft OAuth2 implicit flow ── */
+document.getElementById("loginBtn").addEventListener("click", function() {
+  var authUrl = "https://login.microsoftonline.com/" + TENANT_ID + "/oauth2/v2.0/authorize"
+    + "?client_id=" + CLIENT_ID
+    + "&response_type=token"
+    + "&redirect_uri=" + encodeURIComponent(REDIRECT)
+    + "&scope=" + encodeURIComponent(SCOPES)
+    + "&response_mode=fragment"
+    + "&nonce=" + Math.random().toString(36).slice(2);
+  window.location.href = authUrl;
+});
 
-function showChat(name){
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('chatScreen').style.display  = 'flex';
-  setStatus(name || 'מחובר', 'ok');
-}
-
-async function login(){
-  try {
-    const res = await msalInstance.loginPopup({ scopes: graphScopes });
-    msalInstance.setActiveAccount(res.account);
-    showChat(res.account.name || res.account.username);
-  } catch(e) {
-    alert('שגיאת התחברות: ' + e.message);
+/* ── Check for token in URL hash after redirect ── */
+function checkToken() {
+  var hash = window.location.hash.substring(1);
+  if (!hash) return;
+  var params = {};
+  hash.split("&").forEach(function(p) {
+    var kv = p.split("=");
+    params[kv[0]] = decodeURIComponent(kv[1] || "");
+  });
+  if (params.access_token) {
+    msToken = params.access_token;
+    window.location.hash = "";
+    showChat();
   }
 }
 
-function toggleLogin(){
-  const acc = msalInstance.getActiveAccount();
-  if(acc){ msalInstance.setActiveAccount(null); location.reload(); }
-  else login();
+function showChat() {
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("chatScreen").style.display  = "flex";
+  setStatus("מחובר", "ok");
 }
 
-async function getToken(){
-  const acc = msalInstance.getActiveAccount();
-  if(!acc) throw new Error('לא מחובר');
-  const res = await msalInstance.acquireTokenSilent({ scopes: graphScopes, account: acc });
-  return res.accessToken;
-}
-
-// Auto-login if account exists
-(async()=>{
-  await msalInstance.initialize();
-  const accounts = msalInstance.getAllAccounts();
-  if(accounts.length > 0){
-    msalInstance.setActiveAccount(accounts[0]);
-    showChat(accounts[0].name || accounts[0].username);
-  }
-})();
+checkToken();
 
 /* ── UI helpers ── */
-function addUserMsg(text){
-  const d=document.createElement('div'); d.className='msg user';
-  d.innerHTML=`<div class="avatar user">אתה</div><div class="bubble"><p>${esc(text)}</p></div>`;
-  chatEl.appendChild(d); chatEl.scrollTop=chatEl.scrollHeight;
+function addUserMsg(text) {
+  var d = document.createElement("div"); d.className = "msg user";
+  d.innerHTML = "<div class='avatar user'>אתה</div><div class='bubble'><p>" + esc(text) + "</p></div>";
+  chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
 }
-function addTyping(){
-  const d=document.createElement('div'); d.className='msg ai'; d.id='typ';
-  d.innerHTML='<div class="avatar ai">BP</div><div class="bubble"><div class="typing"><span></span><span></span><span></span></div></div>';
-  chatEl.appendChild(d); chatEl.scrollTop=chatEl.scrollHeight;
+function addTyping() {
+  var d = document.createElement("div"); d.className = "msg ai"; d.id = "typ";
+  d.innerHTML = "<div class='avatar ai'>BP</div><div class='bubble'><div class='typing'><span></span><span></span><span></span></div></div>";
+  chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
 }
-function removeTyping(){ const el=document.getElementById('typ'); if(el) el.remove(); }
-function addAiMsg(html){
-  const d=document.createElement('div'); d.className='msg ai';
-  d.innerHTML=`<div class="avatar ai">BP</div><div class="bubble">${html}</div>`;
-  chatEl.appendChild(d); chatEl.scrollTop=chatEl.scrollHeight;
+function removeTyping() { var el = document.getElementById("typ"); if (el) el.remove(); }
+function addAiMsg(html) {
+  var d = document.createElement("div"); d.className = "msg ai";
+  d.innerHTML = "<div class='avatar ai'>BP</div><div class='bubble'>" + html + "</div>";
+  chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
 }
 
-function mdToHtml(text){
-  const lines=text.split('\n'); let html='',inUl=false;
-  for(let line of lines){
-    line=line.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/__(.*?)__/g,'<strong>$1</strong>');
-    const bullet=/^\s*[-*•]\s+/.test(line);
-    if(bullet&&!inUl){html+='<ul>';inUl=true;}
-    if(!bullet&&inUl){html+='</ul>';inUl=false;}
-    if(bullet) html+='<li>'+line.replace(/^\s*[-*•]\s+/,'')+'</li>';
-    else if(line.trim()) html+='<p>'+line+'</p>';
+function mdToHtml(text) {
+  var lines = text.split("\n"); var html = ""; var inUl = false;
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i]
+      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+      .replace(/__(.*?)__/g, "<strong>$1</strong>");
+    var bullet = /^\s*[-*]\s+/.test(line);
+    if (bullet && !inUl) { html += "<ul>"; inUl = true; }
+    if (!bullet && inUl) { html += "</ul>"; inUl = false; }
+    if (bullet) html += "<li>" + line.replace(/^\s*[-*]\s+/, "") + "</li>";
+    else if (line.trim()) html += "<p>" + line + "</p>";
   }
-  if(inUl) html+='</ul>';
-  return html||'<p>'+esc(text)+'</p>';
+  if (inUl) html += "</ul>";
+  return html || "<p>" + esc(text) + "</p>";
 }
 
-function renderSources(files){
-  if(!files||!files.length) return '';
-  const rows=files.map(f=>{
-    const ext=(f.name.split('.').pop()||'').toLowerCase();
-    const cls=['pdf','xlsx','xls','docx','doc','pptx','ppt'].includes(ext)?ext:'other';
-    const lbl={pdf:'PDF',xlsx:'XLS',xls:'XLS',docx:'DOC',doc:'DOC',pptx:'PPT',ppt:'PPT'}[ext]||'FILE';
-    const date=f.modified?new Date(f.modified).toLocaleDateString('he-IL'):'';
-    const hasUrl=f.url&&f.url.startsWith('http');
-    const tag=hasUrl?`<a class="source-link" href="${esc(f.url)}" target="_blank" rel="noopener">`:`<div class="source-link">`;
-    const end=hasUrl?'</a>':'</div>';
-    const open=hasUrl?`<span class="sl-open">↗ פתח</span>`:'';
-    return `${tag}<div class="sl-icon ${cls}">${lbl}</div><span class="sl-name">${esc(f.name)}</span><span class="sl-meta">${date}</span>${open}${end}`;
-  }).join('');
-  return `<div class="sources-block"><div class="sources-label">מקורות</div>${rows}</div>`;
+function renderSources(files) {
+  if (!files || !files.length) return "";
+  var rows = "";
+  for (var i = 0; i < files.length; i++) {
+    var f = files[i];
+    var ext = (f.name.split(".").pop() || "").toLowerCase();
+    var cls = ["pdf","xlsx","xls","docx","doc","pptx","ppt"].indexOf(ext) >= 0 ? ext : "other";
+    var lbl = {"pdf":"PDF","xlsx":"XLS","xls":"XLS","docx":"DOC","doc":"DOC","pptx":"PPT","ppt":"PPT"}[ext] || "FILE";
+    var date = f.modified ? new Date(f.modified).toLocaleDateString("he-IL") : "";
+    var hasUrl = f.url && f.url.indexOf("http") === 0;
+    var tag = hasUrl ? "<a class='source-link' href='" + esc(f.url) + "' target='_blank' rel='noopener'>" : "<div class='source-link'>";
+    var end = hasUrl ? "</a>" : "</div>";
+    var open = hasUrl ? "<span class='sl-open'>↗ פתח</span>" : "";
+    rows += tag + "<div class='sl-icon " + cls + "'>" + lbl + "</div><span class='sl-name'>" + esc(f.name) + "</span><span class='sl-meta'>" + date + "</span>" + open + end;
+  }
+  return "<div class='sources-block'><div class='sources-label'>מקורות</div>" + rows + "</div>";
 }
 
-/* ── SharePoint Search ── */
-async function searchSharePoint(token, query){
-  const res=await fetch('https://graph.microsoft.com/v1.0/search/query',{
-    method:'POST',
-    headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
-    body:JSON.stringify({requests:[{
-      entityTypes:['driveItem'],
-      query:{queryString:query},
-      fields:['name','webUrl','lastModifiedDateTime','parentReference'],
-      size:6,
-      sortProperties:[{name:'lastModifiedDateTime',isDescending:true}]
-    }]})
+/* ── SharePoint search ── */
+function searchSharePoint(query) {
+  return fetch("https://graph.microsoft.com/v1.0/search/query", {
+    method: "POST",
+    headers: { "Authorization": "Bearer " + msToken, "Content-Type": "application/json" },
+    body: JSON.stringify({ requests: [{ entityTypes: ["driveItem"], query: { queryString: query }, fields: ["name","webUrl","lastModifiedDateTime","parentReference"], size: 6, sortProperties: [{ name: "lastModifiedDateTime", isDescending: true }] }] })
+  }).then(function(r) { return r.json(); }).then(function(data) {
+    var hits = (data && data.value && data.value[0] && data.value[0].hitsContainers && data.value[0].hitsContainers[0] && data.value[0].hitsContainers[0].hits) || [];
+    return hits.map(function(h) {
+      return { name: h.resource && h.resource.name || "", url: h.resource && h.resource.webUrl || "", modified: h.resource && h.resource.lastModifiedDateTime || "", driveId: h.resource && h.resource.parentReference && h.resource.parentReference.driveId || "", itemId: h.resource && h.resource.id || "" };
+    });
   });
-  const data=await res.json();
-  const hits=data?.value?.[0]?.hitsContainers?.[0]?.hits||[];
-  return hits.map(h=>({
-    name:h.resource?.name||'',
-    url:h.resource?.webUrl||'',
-    modified:h.resource?.lastModifiedDateTime||'',
-    driveId:h.resource?.parentReference?.driveId||'',
-    itemId:h.resource?.id||''
-  }));
 }
 
-/* ── Read file content ── */
-async function readFile(token, driveId, itemId){
-  try{
-    const res=await fetch(
-      `https://graph.microsoft.com/v1.0/drives/${driveId}/items/${itemId}/content`,
-      {headers:{Authorization:`Bearer ${token}`}}
-    );
-    if(!res.ok) return null;
-    const ct=res.headers.get('content-type')||'';
-    if(ct.includes('text')||ct.includes('json')) return (await res.text()).slice(0,4000);
+function readFile(driveId, itemId) {
+  return fetch("https://graph.microsoft.com/v1.0/drives/" + driveId + "/items/" + itemId + "/content", {
+    headers: { "Authorization": "Bearer " + msToken }
+  }).then(function(r) {
+    if (!r.ok) return null;
+    var ct = r.headers.get("content-type") || "";
+    if (ct.indexOf("text") >= 0 || ct.indexOf("json") >= 0) return r.text().then(function(t) { return t.slice(0, 4000); });
     return null;
-  }catch(){ return null; }
+  }).catch(function() { return null; });
 }
 
-/* ── Gemini ── */
-async function askGemini(question, docsContext){
-  const prompt=`אתה סוכן מסמכים של BuySide Partners — חברת ייעוץ השקעות ופרייבט אקוויטי.
-ענה אך ורק לפי המסמכים שסופקו. אל תשתמש בידע כללי.
-אם המידע לא נמצא — כתוב: "לא מצאתי מסמך רלוונטי בשרת."
-ענה בעברית, ישירות ומקצועית. השתמש ב-**הדגשה** לנקודות מפתח.
-
-שאלה: ${question}
-
-מסמכים:
-${docsContext}`;
-
-  const res=await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`,
-    {method:'POST',headers:{'Content-Type':'application/json'},
-     body:JSON.stringify({contents:[{parts:[{text:prompt}]}]})}
-  );
-  const data=await res.json();
-  if(data.error) throw new Error(data.error.message);
-  return data?.candidates?.[0]?.content?.parts?.[0]?.text||'לא התקבלה תשובה.';
-}
-
-/* ══ MAIN ══ */
-async function sendMsg(){
-  const q=inp.value.trim();
-  if(!q||busy) return;
-  inp.value=''; inp.style.height='auto';
-  busy=true; document.getElementById('sendbtn').disabled=true;
-  setStatus('מחפש...','busy');
+/* ── Main ── */
+function sendMsg() {
+  var q = inp.value.trim();
+  if (!q || busy) return;
+  inp.value = ""; inp.style.height = "auto";
+  busy = true; document.getElementById("sendbtn").disabled = true;
+  setStatus("מחפש...", "busy");
   addUserMsg(q); addTyping();
 
-  try{
-    const token=await getToken();
+  var allFiles = [];
 
-    // Search (2 parallel)
-    const [r1,r2]=await Promise.all([
-      searchSharePoint(token,q),
-      searchSharePoint(token,q.split(' ').slice(0,3).join(' '))
-    ]);
-    const seen=new Set();
-    const files=[...r1,...r2]
-      .filter(f=>{if(seen.has(f.itemId)||!f.itemId)return false;seen.add(f.itemId);return true;})
-      .sort((a,b)=>new Date(b.modified)-new Date(a.modified))
-      .slice(0,5);
+  Promise.all([searchSharePoint(q), searchSharePoint(q.split(" ").slice(0,3).join(" "))])
+  .then(function(results) {
+    var seen = {};
+    var files = [];
+    [results[0], results[1]].forEach(function(arr) {
+      arr.forEach(function(f) {
+        if (f.itemId && !seen[f.itemId]) { seen[f.itemId] = true; files.push(f); }
+      });
+    });
+    files.sort(function(a, b) { return new Date(b.modified) - new Date(a.modified); });
+    allFiles = files.slice(0, 5);
 
-    if(!files.length){
+    if (!allFiles.length) {
       removeTyping();
-      addAiMsg('<p>לא מצאתי מסמכים רלוונטיים בשרת BuySide Partners.</p>');
-      setStatus('מחובר','ok'); busy=false;
-      document.getElementById('sendbtn').disabled=false;
-      return;
+      addAiMsg("<p>לא מצאתי מסמכים רלוונטיים בשרת BuySide Partners.</p>");
+      setStatus("מחובר", "ok"); busy = false;
+      document.getElementById("sendbtn").disabled = false;
+      return Promise.reject("no-files");
     }
 
-    // Read contents
-    setStatus('קורא מסמכים...','busy');
-    const contents=await Promise.all(
-      files.map(f=>f.driveId&&f.itemId?readFile(token,f.driveId,f.itemId):Promise.resolve(null))
-    );
+    setStatus("קורא מסמכים...", "busy");
+    return Promise.all(allFiles.map(function(f) {
+      return f.driveId && f.itemId ? readFile(f.driveId, f.itemId) : Promise.resolve(null);
+    }));
+  })
+  .then(function(contents) {
+    var ctx = allFiles.map(function(f, i) {
+      var c = contents[i] ? contents[i].slice(0, 3500) : "(תוכן לא זמין — פתח את הקישור)";
+      return "--- " + f.name + " | " + (f.modified ? f.modified.slice(0,10) : "") + " ---\n" + c;
+    }).join("\n\n");
 
-    const ctx=files.map((f,i)=>{
-      const c=contents[i]?contents[i].slice(0,3500):'(תוכן לא זמין — פתח את הקישור)';
-      return `--- ${f.name} | ${f.modified?.slice(0,10)||''} ---\n${c}`;
-    }).join('\n\n');
-
-    // Ask Gemini
-    setStatus('מנתח...','busy');
-    const answer=await askGemini(q,ctx);
-
+    // הצג תוצאות ישירות (ללא AI כרגע)
     removeTyping();
-    addAiMsg(mdToHtml(answer)+renderSources(files));
-    setStatus('מחובר','ok');
-
-  }catch(err){
+    var summary = "<p>מצאתי <strong>" + allFiles.length + " מסמכים רלוונטיים</strong> לשאלתך על: " + esc(q) + "</p>";
+    if (contents[0]) {
+      summary += "<p style='margin-top:8px'>" + esc(contents[0].slice(0, 500).replace(/\n/g, " ")) + "...</p>";
+    }
+    addAiMsg(summary + renderSources(allFiles));
+    setStatus("מחובר", "ok");
+    busy = false;
+    document.getElementById("sendbtn").disabled = false;
+    chatEl.scrollTop = chatEl.scrollHeight;
+  })
+  .catch(function(err) {
+    if (err === "no-files") return;
     removeTyping();
-    addAiMsg(`<p style="color:#f07070">שגיאה: ${esc(err.message)}</p>`);
-    setStatus('שגיאה','');
-    console.error(err);
-  }
-
-  busy=false; document.getElementById('sendbtn').disabled=false;
-  chatEl.scrollTop=chatEl.scrollHeight;
+    addAiMsg("<p style='color:#f07070'>שגיאה: " + esc(String(err)) + "</p>");
+    setStatus("שגיאה", "");
+    busy = false;
+    document.getElementById("sendbtn").disabled = false;
+  });
 }
 
-function ask(q){ inp.value=q; sendMsg(); }
+function ask(q) { inp.value = q; sendMsg(); }
 </script>
 </body>
 </html>
